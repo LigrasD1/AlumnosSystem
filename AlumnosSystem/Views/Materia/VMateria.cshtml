@@ -1,0 +1,98 @@
+﻿@model List<AlumnosSystem.Models.Materium>
+
+
+
+<h1>Lista de materias</h1>
+<div style="margin-bottom:10px; display:flex;">
+    <a class="btn btn-primary" href="@Url.Action("AgregarMateria", "Materia")">Agregar</a>
+
+    <input type="text" id="inputBusqueda" class="form-control" placeholder="Buscar...">
+
+</div>
+<div class="card">
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID Materia</th>
+                <th>ID Carrera</th>
+                <th>Nombre</th>
+                <th>Periodo</th>
+                
+                <th>Operaciones</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @if (Model != null)
+            {
+                foreach (var materia in Model)
+                {
+
+                    <tr class="fila-tabla">
+                        <td>@materia.IdMateria</td>
+                        <td>@materia.IdCarrera</td>
+                        <td>@materia.NombreMateria</td>
+                        <td>@materia.Periodo</td>
+                        <td>
+                            <a class="btn btn-warning" href="@Url.Action("EditarMateria", "Materia", new { id = materia.IdMateria })">Editar</a>
+                        </td>
+                    </tr>
+
+
+                }
+            }
+
+        </tbody>
+    </table>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#inputBusqueda').on('keyup', function () {
+            var searchText = $(this).val().toLowerCase();
+            $('.fila-tabla').each(function () {
+                var row = $(this);
+                var found = false;
+                row.find('td').each(function () {
+                    if ($(this).text().toLowerCase().indexOf(searchText) !== -1) {
+                        found = true;
+                        return false;
+                    }
+                });
+                if (found) {
+                    row.show();
+                } else {
+                    row.hide();
+                }
+            });
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('#inputBusqueda, #filtroEstado').on('change keyup', function () {
+            filtrarAlumnos();
+        });
+
+        function filtrarAlumnos() {
+            var searchText = $('#inputBusqueda').val().toLowerCase();
+            var estadoFiltro = $('#filtroEstado').val();
+
+            $('.fila-tabla').each(function () {
+                var row = $(this);
+                var alumnoEstado = row.find('td:eq(5)').text().trim().toLowerCase() === 'activo';
+
+                if ((searchText === '' || row.text().toLowerCase().includes(searchText)) &&
+                    (estadoFiltro === '' || (estadoFiltro === 'true' && alumnoEstado) || (estadoFiltro === 'false' && !alumnoEstado))) {
+                    row.show();
+                } else {
+                    row.hide();
+                }
+            });
+        }
+    });
+</script>
+
+

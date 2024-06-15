@@ -1,0 +1,129 @@
+﻿@model AlumnosSystem.Models.AlumnoCLS
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style>
+        .agrandar input {
+            width: 300px;
+            flex 1;
+        }
+
+        .agrandar div {
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .agrandar label {
+            width: 150px;
+            margin-right: 150px;
+        }
+
+        .agrandar .text-danger {
+            margin-top: 5px;
+        }
+
+        .btn-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around; /* Esto distribuye el espacio de forma uniforme */
+            align-items: center; /* Esto alinea los elementos al centro verticalmente */
+            gap: 10px;  
+        }
+
+        .card {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+   
+    <div class="card">
+        <form class="agrandar" asp-action="AddAlumno" asp-controller="Alumno" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div>
+                <label asp-for="_IdUsuario" class="control-label"></label>
+                <input asp-for="_IdUsuario" class="form-control" />
+                <span asp-validation-for="_IdUsuario" class="text-danger"></span>
+
+            </div>
+
+            <div>
+                <label asp-for="_Apenom" class="control-label"></label>
+                <input asp-for="_Apenom" class="form-control" />
+                <span asp-validation-for="_Apenom" class="text-danger"></span>
+
+            </div>
+            <div>
+                <label asp-for="_Dni" class="control-label"></label>
+                <input asp-for="_Dni" class="form-control" />
+                <span asp-validation-for="_Dni" class="text-danger"></span>
+
+            </div>
+            <div>
+                <label asp-for="_Email" class="control-label"></label>
+                <input asp-for="_Email" class="form-control" />
+                <span asp-validation-for="_Email" class="text-danger"></span>
+
+            </div>
+            <div>
+                <label asp-for="_Telefono" class="control-label"></label>
+                <input asp-for="_Telefono" class="form-control" />
+                <span asp-validation-for="_Telefono" class="text-danger"></span>
+
+            </div>
+            <div>
+                <label asp-for="_Estado" class="control-label"></label>
+                <select asp-for="_Estado" class="form-control">
+                    <option value=@true>"Activo"</option>
+                    <option value=@false>"Inactivo"</option>
+                </select>
+                <span asp-validation-for="_Estado" class="text-danger"></span>
+            </div>
+            <div style="all:unset !important;">
+                <div class="btn-container">
+
+                    <button type="submit" class="btn btn-success">Guardar</button>
+
+                    <a class="btn btn-danger" href="@Url.Action("VAlumno", "Alumno")">Cancelar</a>
+
+                </div>
+            </div>
+            
+
+        </form>
+    </div>
+
+    @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+    {
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var ErrorModal = new bootstrap.Modal(document.getElementById('ErrorModal'));
+                ErrorModal.show();
+            });
+        </script>
+    }
+    
+    
+    <div class="modal fade" id="ErrorModal" tabindex="-1" aria-labelledby="ErorModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="ErrorModalLabel">Error</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

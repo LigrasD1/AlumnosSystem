@@ -1,0 +1,93 @@
+﻿{
+   "CodeGenerationMode": 4,
+   "ContextClassName": "AlumnosDBContext",
+   "ContextNamespace": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Models",
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "AlumnosSystem",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 2,
+   "SelectedToBeGenerated": 0,
+   "T4TemplatePath": null,
+   "Tables": [
+      {
+         "Name": "[dbo].[Administrador]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Alumno]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AlumnoInscriptoCarrera]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AlumnoInscriptoCursada]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Carrera]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[InscripcionMesa]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Institucion]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Materia]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Mesa]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Profesor]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ProfesorMateria]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ResponsableAcademico]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Usuario]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": null,
+   "UncountableWords": null,
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDateOnlyTimeOnly": true,
+   "UseDbContextSplitting": false,
+   "UseDecimalDataAnnotationForSprocResult": true,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": true,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UsePrefixNavigationNaming": false,
+   "UseSchemaFolders": false,
+   "UseSchemaNamespaces": false,
+   "UseSpatial": false,
+   "UseT4": false
+}
