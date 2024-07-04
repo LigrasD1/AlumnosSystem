@@ -342,6 +342,7 @@ public partial class AlumnosDBContext : DbContext
         modelBuilder.Entity<Usuario>(entity =>
         {
             entity.HasKey(e => e.IdUsuario);
+            entity.Property(e=>e.IdUsuario).UseIdentityColumn().ValueGeneratedOnAdd();
 
             entity.ToTable("Usuario");
 

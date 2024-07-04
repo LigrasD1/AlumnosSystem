@@ -1,1 +1,94 @@
-﻿
+﻿@model AlumnosSystem.ViewModels.AlumnoInscriptoCarreraVM
+@{
+	var nombres = ViewBag.Nombres as List<string>;
+	
+}
+<html>
+	<head>
+
+		<style>
+		.agrandar input {
+			width: 300px;
+			flex: 1;
+		}
+
+		.agrandar div {
+			align-items: center;
+			margin-bottom: 10px;
+		}
+
+		.agrandar label {
+			width: 150px;
+			margin-right: 150px;
+		}
+
+		.agrandar .text-danger {
+			margin-top: 5px;
+		}
+
+		.btn-container {
+			display: flex;
+			justify-content: flex-start;
+		}
+
+		.card {
+			max-width: 400px;
+			margin: 20px auto;
+			padding: 20px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		}
+		
+		</style>
+	</head>
+	<body>
+		<div class="card">
+		<form class="grid-container" asp-action="VInscripcion" asp-controller="Inscripcion">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="grid-item">
+				<label asp-for="_Apenom" class="control-label"></label>
+				<input asp-for="_Apenom" class="form-control" />
+				<span asp-validation-for="_Apenom" class="text-danger"></span>
+
+
+			</div>
+			<div class="grid-item">
+				<label asp-for="_Dni" class="control-label"></label>
+				<input asp-for="_Dni" class="form-control" />
+				<span asp-validation-for="_Dni" class="text-danger"></span>
+			</div>
+			<div class="grid-item">
+				<label asp-for="_Email" class="control-label"></label>
+				<input asp-for="_Email" class="form-control" />
+				<span asp-validation-for="_Email" class="text-danger"></span>
+			</div>
+			<div class="grid-item">
+				<label asp-for="_Telefono" class="control-label"></label>
+				<input asp-for="_Telefono" class="form-control" />
+				<span asp-validation-for="_Telefono" class="text-danger"></span>
+			</div>
+			<div class="grid-item">
+				<select asp-for="idCarrera">
+
+					@if (nombres != null)
+					{
+						for (int i = 0; i < nombres.Count; i++)
+						{
+							<option value="@(i+1)">@nombres[i]</option>
+						}
+					}
+
+				</select>
+			</div>
+		</form>
+		<div class="btn-container" style="display:flex; justify-content:space-around">
+			<button type="submit" class="btn-success">Solicitar inscripcion</button>
+			<a class="btn btn-danger" href="@Url.Action("Index", "Home")">Cancelar</a>
+
+
+		</div>
+
+	</div>
+		
+		
+	</body>
+</html>

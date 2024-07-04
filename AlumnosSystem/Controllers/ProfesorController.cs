@@ -3,10 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Threading.Tasks;
-
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AlumnosSystem.Controllers
 {
+    [Authorize(Roles = "admin,administrador")]
+
     public class ProfesorController : Controller
     {
         AlumnosDBContext _dbContext;
@@ -14,6 +18,7 @@ namespace AlumnosSystem.Controllers
         {
             _dbContext = dbContext;
         }
+       
 
         public async Task< IActionResult> VProfesor()
         {
@@ -33,6 +38,7 @@ namespace AlumnosSystem.Controllers
 
         public async Task<IActionResult> EditarProfesor(int? id)
         {
+
             try
             {
                 Profesor? profe = await _dbContext.Profesors.FirstOrDefaultAsync(a => a.IdProfesor == id);
@@ -67,6 +73,7 @@ namespace AlumnosSystem.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Editar(ProfesorCLS profe)
         {
+
             if (!ModelState.IsValid)
             {
                 return View(profe);
@@ -103,6 +110,7 @@ namespace AlumnosSystem.Controllers
         
         public IActionResult AgregarProfesor()
         {
+
             return View();
         }
         [HttpPost]

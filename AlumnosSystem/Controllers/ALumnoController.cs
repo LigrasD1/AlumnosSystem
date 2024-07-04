@@ -1,9 +1,14 @@
 ﻿using AlumnosSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AlumnosSystem.Controllers
 {
+    [Authorize (Roles = "admin,administrador")]
+
     public class ALumnoController : Controller
     {
         AlumnosDBContext _dbContext;
@@ -11,7 +16,7 @@ namespace AlumnosSystem.Controllers
         {
             _dbContext = dbContext;
         }
-        public IActionResult Index()
+        public IActionResult Inscripcion()
         {
             return View();
         }
@@ -70,26 +75,34 @@ namespace AlumnosSystem.Controllers
         [HttpPost]
         public async Task<ActionResult> Editar(AlumnoCLS alumCLS)
         {
-            var alumno = await _dbContext.Alumnos.FirstOrDefaultAsync(a => a.IdAlumno == alumCLS._IdAlumno);
-            if (alumno == null)
+            try
             {
-                ViewBag.ErrorMessage = "Alumno no existente";
-                return RedirectToAction("VAlumno");
+                var alumno = await _dbContext.Alumnos.FirstOrDefaultAsync(a => a.IdAlumno == alumCLS._IdAlumno);
+
+                if (alumno == null)
+                {
+                    ViewBag.ErrorMessage = "Alumno no existente";
+                }
+                else
+                {
+                    alumno.Apenom = alumCLS._Apenom;
+                    alumno.Dni = alumCLS._Dni;
+                    alumno.Telefono = alumCLS._Telefono;
+                    alumno.Email = alumCLS._Email;
+                    alumno.Estado = alumCLS._Estado;
+                    _dbContext.Alumnos.Update(alumno);
+                    _dbContext.SaveChanges();
+                }
             }
-            else
+            catch (Exception ex) 
             {
-                alumno.Apenom = alumCLS._Apenom;
-                alumno.Dni = alumCLS._Dni;
-                alumno.Telefono = alumCLS._Telefono;
-                alumno.Email = alumCLS._Email;
-                alumno.Estado = alumCLS._Estado;
-                _dbContext.Alumnos.Update(alumno);
-                _dbContext.SaveChanges();
+                ViewBag.ErrorMessage = "No se ha podido accder a la base de datos";
             }
-            
 
 
             return RedirectToAction("VAlumno");
+
+
         }
 
         public IActionResult AgregarAlumno()

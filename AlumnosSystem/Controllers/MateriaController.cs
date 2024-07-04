@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AlumnosSystem.Models;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AlumnosSystem.Controllers
 {
+    [Authorize(Roles = "admin,administrador")]
     public class MateriaController : Controller
     {
         AlumnosDBContext _dbContext;

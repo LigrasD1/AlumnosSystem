@@ -1,107 +1,128 @@
 ﻿@model List<AlumnosSystem.Models.Alumno>
 
+<head>
+    <link rel="stylesheet" href="~/Content/bootstrap.css" />
+    <link rel="stylesheet" href="~/Content/site.css" />
+</head>
+<body>
+    <h1>Lista de Alumnos</h1>
+    <div>
+        <button class="btn btn-outline-success" onclick="imprimirContenido()">Imprimir lista</button>
+    </div>
+    <div style="margin-bottom:10px; display:flex;">
+        <a class="btn btn-primary" href="@Url.Action("AgregarAlumno", "Alumno")">Agregar</a>
 
+        <input type="text" id="inputBusqueda" class="form-control" placeholder="Buscar...">
 
-<h1>Lista de Alumnos</h1>
-<div style="margin-bottom:10px; display:flex;">
-    <a class="btn btn-primary" href="@Url.Action("AgregarAlumno", "Alumno")">Agregar</a>
+    </div>
+    <div class="card">
 
-    <input type="text" id="inputBusqueda" class="form-control" placeholder="Buscar...">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID de alumno</th>
+                    <th>Nombre</th>
+                    <th>DNI</th>
+                    <th>Email</th>
+                    <th>Telefono</th>
+                    <th>
+                        <select id="filtroEstado">
+                            <option value="">Estado</option>
+                            <option value="true">Activo</option>
+                            <option value="false">Inactivo</option>
+                        </select>
+                    </th>
+                    <th>Operaciones</th>
+                </tr>
+            </thead>
+            <tbody>
 
-</div>
-<div class="card">
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>ID de alumno</th>
-                <th>Nombre</th>
-                <th>DNI</th>
-                <th>Email</th>
-                <th>Telefono</th>
-                <th>
-                    <select id="filtroEstado">
-                        <option value="">Estado</option>
-                        <option value="true">Activo</option>
-                        <option value="false">Inactivo</option>
-                    </select>
-                </th>
-                <th>Operaciones</th>
-            </tr>
-        </thead>
-        <tbody>
-
-            @if (Model != null)
-            {
-                foreach (var alumno in Model)
+                @if (Model != null)
                 {
+                    foreach (var alumno in Model)
+                    {
 
-                    <tr class="fila-tabla">
-                        <td>@alumno.IdAlumno</td>
-                        <td>@alumno.Apenom</td>
-                        <td>@alumno.Dni</td>
-                        <td>@alumno.Email</td>
-                        <td>@alumno.Telefono</td>
-                        <td>@(alumno.Estado ? "Activo" : "Inactivo")</td>
-                        <td>
-                            <a class="btn btn-warning" href="@Url.Action("EditarAlumno", "Alumno", new { id = alumno.IdAlumno })">Editar</a>
-                        </td>
-                    </tr>
+                        <tr class="fila-tabla">
+                            <td>@alumno.IdAlumno</td>
+                            <td>@alumno.Apenom</td>
+                            <td>@alumno.Dni</td>
+                            <td>@alumno.Email</td>
+                            <td>@alumno.Telefono</td>
+                            <td>@(alumno.Estado ? "Activo" : "Inactivo")</td>
+                            <td>
+                                <a class="btn btn-warning" href="@Url.Action("EditarAlumno", "Alumno", new { id = alumno.IdAlumno })">Editar</a>
+                            </td>
+                        </tr>
 
 
+                    }
                 }
-            }
 
-        </tbody>
-    </table>
-</div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            </tbody>
+        </table>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<script>
-    $(document).ready(function () {
-        $('#inputBusqueda').on('keyup', function () {
-            var searchText = $(this).val().toLowerCase();
-            $('.fila-tabla').each(function () {
-                var row = $(this);
-                var found = false;
-                row.find('td').each(function () {
-                    if ($(this).text().toLowerCase().indexOf(searchText) !== -1) {
-                        found = true;
-                        return false;
+    <script>
+        function imprimirContenido() {
+            var contenidoParaImprimir = document.querySelector('.card').outerHTML;
+            var estilos = document.querySelectorAll('link[rel="stylesheet"], style');
+            var ventanaNueva = window.open('', '_parent');
+            ventanaNueva.document.write('<!DOCTYPE html><html><head><title>Contenido para imprimir</title>');
+            estilos.forEach(function (estilo) {
+                ventanaNueva.document.write(estilo.outerHTML);
+            });
+
+            ventanaNueva.document.write('</head><body>' + contenidoParaImprimir + '</body></html>');
+            ventanaNueva.document.close();
+            ventanaNueva.print();
+        }
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('#inputBusqueda').on('keyup', function () {
+                var searchText = $(this).val().toLowerCase();
+                $('.fila-tabla').each(function () {
+                    var row = $(this);
+                    var found = false;
+                    row.find('td').each(function () {
+                        if ($(this).text().toLowerCase().indexOf(searchText) !== -1) {
+                            found = true;
+                            return false;
+                        }
+                    });
+                    if (found) {
+                        row.show();
+                    } else {
+                        row.hide();
                     }
                 });
-                if (found) {
-                    row.show();
-                } else {
-                    row.hide();
-                }
             });
         });
-    });
-</script>
-<script>
-    $(document).ready(function () {
-        $('#inputBusqueda, #filtroEstado').on('change keyup', function () {
-            filtrarAlumnos();
-        });
-
-        function filtrarAlumnos() {
-            var searchText = $('#inputBusqueda').val().toLowerCase();
-            var estadoFiltro = $('#filtroEstado').val();
-
-            $('.fila-tabla').each(function () {
-                var row = $(this);
-                var alumnoEstado = row.find('td:eq(5)').text().trim().toLowerCase() === 'activo';
-
-                if ((searchText === '' || row.text().toLowerCase().includes(searchText)) &&
-                    (estadoFiltro === '' || (estadoFiltro === 'true' && alumnoEstado) || (estadoFiltro === 'false' && !alumnoEstado))) {
-                    row.show();
-                } else {
-                    row.hide();
-                }
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#inputBusqueda, #filtroEstado').on('change keyup', function () {
+                filtrarAlumnos();
             });
-        }
-    });
-</script>
 
+            function filtrarAlumnos() {
+                var searchText = $('#inputBusqueda').val().toLowerCase();
+                var estadoFiltro = $('#filtroEstado').val();
 
+                $('.fila-tabla').each(function () {
+                    var row = $(this);
+                    var alumnoEstado = row.find('td:eq(5)').text().trim().toLowerCase() === 'activo';
+
+                    if ((searchText === '' || row.text().toLowerCase().includes(searchText)) &&
+                        (estadoFiltro === '' || (estadoFiltro === 'true' && alumnoEstado) || (estadoFiltro === 'false' && !alumnoEstado))) {
+                        row.show();
+                    } else {
+                        row.hide();
+                    }
+                });
+            }
+        });
+    </script>
+</body>

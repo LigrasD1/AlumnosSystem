@@ -7,7 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Carrera\AgregarCarrera.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="efpt.config.json.user" />
+    <None Include="Views\Carrera\AgregarCarrera.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,6 +22,14 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Carrera\AgregarCarrera.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Carrera\AgregarCarrera.cshtml" />
   </ItemGroup>
 
 </Project>

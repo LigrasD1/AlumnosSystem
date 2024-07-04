@@ -1,0 +1,74 @@
+﻿
+@model List<AlumnosSystem.Models.Carrera>
+
+<html>
+	<head>
+        <style >
+        .agrandar input {
+            width: 300px;
+            flex: 1;
+        }
+
+        .agrandar div {
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .agrandar label {
+            width: 150px;
+            margin-right: 150px;
+        }
+
+        .agrandar .text-danger {
+            margin-top: 5px;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .card {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+	</head>
+	<body>
+		<div class="card">
+        @using (Html.BeginForm("Inscripcion", "Certificados", FormMethod.Post))
+        {
+            @if (Model! != null)
+            {
+                <select name="IdCarrera">
+
+                    @foreach (var carrera in Model)
+                    {
+                        <option value=@carrera.IdCarrera.ToString()>@carrera.NombreCarrera</option>
+                    }
+                    
+
+                </select>
+                <input type="submit" value="Enviar" />
+
+            }
+            
+           
+        }
+        @if (ViewData["Mensaje"] != null)
+        {
+            <div class="alert alert-danger" role="alert">
+                @ViewData["Mensaje"]
+            </div>
+            <div>
+                <a class="btn btn-success" href="@Url.Action("Inscripcion","Certificados")">Volver</a>
+                <a class="btn btn-danger" href="@Url.Action("Index","Home")">Cancelar</a>
+                
+            </div>
+        }
+        </div>
+		
+	</body>
+</html>
